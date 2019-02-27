@@ -146,7 +146,7 @@ You can now list/add/edit/and delete `MyModel`s.
 
 ### Changesets
 ExAdmin will use your schema's changesets. By default we call the `changeset` function on your schema, although you
-can configure the changeset we use for update and create seperately.
+can configure the changeset we use for update, create and read seperately.
 
 custom changeset:
 ```elixir
@@ -156,6 +156,7 @@ defmodule TestExAdmin.ExAdmin.Simple do
   register_resource TestExAdmin.Simple do
     update_changeset :changeset_update
     create_changeset :changeset_create
+    read_changeset :changeset_read
   end
 end
 ```

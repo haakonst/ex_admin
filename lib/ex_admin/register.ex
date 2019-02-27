@@ -118,6 +118,7 @@ defmodule ExAdmin.Register do
       Module.put_attribute(__MODULE__, :changesets, [])
       Module.put_attribute(__MODULE__, :update_changeset, :changeset)
       Module.put_attribute(__MODULE__, :create_changeset, :changeset)
+      Module.put_attribute(__MODULE__, :read_changeset, :changeset)
 
       @name_column Module.get_attribute(__MODULE__, :name_column) ||
                      apply(ExAdmin.Helpers, :get_name_field, [module])
@@ -245,7 +246,8 @@ defmodule ExAdmin.Register do
                 sidebars: sidebars,
                 scopes: scopes,
                 create_changeset: @create_changeset,
-                update_changeset: @update_changeset
+                update_changeset: @update_changeset,
+                read_changeset: @read_changeset
 
       def run_query(repo, defn, action, id \\ nil) do
         %__MODULE__{}
@@ -417,6 +419,15 @@ defmodule ExAdmin.Register do
   defmacro create_changeset(changeset) do
     quote do
       Module.put_attribute(__MODULE__, :create_changeset, unquote(changeset))
+    end
+  end
+
+  @doc """
+  Override the changesets for a controller's create action
+  """
+  defmacro read_changeset(changeset) do
+    quote do
+      Module.put_attribute(__MODULE__, :read_changeset, unquote(changeset))
     end
   end
 
